@@ -171,6 +171,9 @@
     </div>
 
     <script>
+        // Array to store the wishes (simulating database)
+        const wishes = [];
+
         // Password Protection for Viewing Wishes
         function checkPassword() {
             var password = prompt("Enter the password to access the wishes:");
@@ -180,21 +183,15 @@
 
             if (password === correctPassword) {
                 document.getElementById("wishesSection").style.display = "block";
-                displayWishes();  // Load wishes when password is correct
+                displayWishes();  // Load all wishes when password is correct
             } else {
                 alert("Incorrect password. Please try again.");
             }
         }
 
-        // Function to display wishes dynamically (for illustration purposes)
+        // Function to display all wishes dynamically
         function displayWishes() {
             const wishesList = document.getElementById("wishesList");
-            // Example wishes, can be fetched from a server or added dynamically
-            const wishes = [
-                "Happy Birthday Chinelo! Wishing you all the best. 🎉",
-                "Hope your 20th is as amazing as you are! 💖",
-                "Cheers to many more wonderful years ahead! 🎂"
-            ];
 
             // Clear previous list
             wishesList.innerHTML = "";
@@ -202,14 +199,23 @@
             // Append new wishes
             wishes.forEach(wish => {
                 const li = document.createElement("li");
-                li.textContent = wish;
+                li.textContent = `${wish.name}: ${wish.message}`;
                 wishesList.appendChild(li);
             });
         }
 
-        // Celebrate function to handle the wish submission
+        // Function to handle the wish submission
         function celebrate(event) {
             event.preventDefault(); // Prevent form submission from redirecting
+            const name = event.target.name.value;
+            const wishMessage = event.target.wish.value;
+
+            // Store the new wish in the array (simulating a database)
+            wishes.push({ name, message: wishMessage });
+
+            // Clear the form
+            event.target.reset();
+
             alert("Thank you for your wish! 🎉");
         }
     </script>
