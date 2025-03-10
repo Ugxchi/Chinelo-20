@@ -171,8 +171,8 @@
     </div>
 
     <script>
-        // Array to store the wishes (simulating database)
-        const wishes = [];
+        // Load the stored wishes from localStorage
+        const wishes = JSON.parse(localStorage.getItem('wishes')) || [];
 
         // Password Protection for Viewing Wishes
         function checkPassword() {
@@ -210,15 +210,24 @@
             const name = event.target.name.value;
             const wishMessage = event.target.wish.value;
 
-            // Store the new wish in the array (simulating a database)
+            // Store the new wish in the array
             wishes.push({ name, message: wishMessage });
+
+            // Save the updated wishes array to localStorage
+            localStorage.setItem('wishes', JSON.stringify(wishes));
 
             // Clear the form
             event.target.reset();
 
             alert("Thank you for your wish! 🎉");
         }
+
+        // Display existing wishes if available
+        if (wishes.length > 0) {
+            displayWishes();
+        }
     </script>
 
 </body>
 </html>
+
