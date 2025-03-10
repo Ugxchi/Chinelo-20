@@ -140,6 +140,11 @@
             margin: 10px 0;
             font-size: 1.1em;
         }
+
+        .timestamp {
+            font-size: 0.9em;
+            color: #ffcc00;
+        }
     </style>
 </head>
 <body>
@@ -200,6 +205,13 @@
             wishes.forEach(wish => {
                 const li = document.createElement("li");
                 li.textContent = `${wish.name}: ${wish.message}`;
+
+                // Add timestamp to the wish
+                const timestamp = document.createElement("span");
+                timestamp.textContent = ` — Sent on: ${wish.timestamp}`;
+                timestamp.classList.add("timestamp");
+                li.appendChild(timestamp);
+
                 wishesList.appendChild(li);
             });
         }
@@ -210,8 +222,17 @@
             const name = event.target.name.value;
             const wishMessage = event.target.wish.value;
 
-            // Store the new wish in the array
-            wishes.push({ name, message: wishMessage });
+            // Get current date and time in West Africa Time (WAT)
+            const currentTime = new Date().toLocaleString("en-US", {
+                timeZone: "Africa/Lagos"
+            });
+
+            // Store the new wish with timestamp in the array
+            wishes.push({ 
+                name, 
+                message: wishMessage, 
+                timestamp: currentTime 
+            });
 
             // Save the updated wishes array to localStorage
             localStorage.setItem('wishes', JSON.stringify(wishes));
@@ -230,4 +251,3 @@
 
 </body>
 </html>
-
