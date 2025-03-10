@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Big 20!!! 🎂</title>
+    <style>
+        /* 🌌 General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-image: url('image.jpg') no-repeat center center fixed; 
+            background-size: cover;
+            color: white;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* 🎂 Main Box (Centered) */
+        .main-container {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 20px;
+            width: 45%;
+            max-width: 500px;
+            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            animation: fadeIn 1.5s ease-in-out;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 🎆 Animated Headings */
+        .glow {
+            font-size: 2.5em;
+            color: #ffcc00; /* Golden Yellow for better visibility */
+            text-shadow: 0px 0px 10px rgba(255, 204, 0, 0.8);
+            animation: popText 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes popText {
+            0% { transform: scale(1); text-shadow: 0px 0px 5px white; }
+            100% { transform: scale(1.05); text-shadow: 0px 0px 15px white; }
+        }
+
+        .sub-text {
+            font-size: 1.2em;
+            opacity: 0.9;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        /* 📝 Input Fields */
+        input, textarea {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: none;
+            font-size: 1em;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        textarea {
+            height: 80px;
+            resize: none;
+        }
+
+        /* 🎈 Button */
+        .animated-btn {
+            background: #ffcc00;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            font-size: 1.2em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .animated-btn:hover {
+            background: #ff9900;
+            transform: scale(1.1);
+        }
+
+        /* 🎶 Menu */
+        .menu-container {
+            margin-top: 20px;
+        }
+
+        .menu-btn {
+            background: #ffcc00;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px 10px 10px 0;
+            font-size: 1.2em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            background: #ff9900;
+            transform: scale(1.1);
+        }
+
+        /* 🎈 Wishes Section */
+        .wishes-section {
+            display: none;
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            animation: fadeIn 1.5s ease-in-out;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Central Box -->
+    <div class="main-container">
+        <h1 class="glow">🎉 Happy 20th Birthday Chinelo!!! 🎂</h1>
+        <p class="sub-text">Drop your special wish below 💖</p>
+
+        <!-- Form to Submit Wishes -->
+        <form action="/add_wish" method="POST" onsubmit="celebrate(event)">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <textarea name="wish" placeholder="Write your wish..." required></textarea>
+            <button type="submit" class="animated-btn">🎈 Send Wish</button>
+        </form>
+
+        <!-- Menu to View Wishes -->
+        <div class="menu-container">
+            <button class="menu-btn" onclick="checkPassword()">🔒 View Wishes</button>
+        </div>
+
+        <!-- Wishes Section (Initially Hidden) -->
+        <div class="wishes-section" id="wishesSection">
+            <h3>Wishes:</h3>
+            <ul id="wishesList">
+                <!-- Wishes will appear here dynamically -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Password Protection for Viewing Wishes
+        function checkPassword() {
+            var password = prompt("Enter the password to access the wishes:");
+
+            // Correct password (can be changed)
+            var correctPassword = "birthday2025";
+
+            if (password === correctPassword) {
+                document.getElementById("wishesSection").style.display = "block";
+                displayWishes();  // Load wishes when password is correct
+            } else {
+                alert("Incorrect password. Please try again.");
+            }
+        }
+
+        // Function to display wishes dynamically (for illustration purposes)
+        function displayWishes() {
+            const wishesList = document.getElementById("wishesList");
+            // Example wishes, can be fetched from a server or added dynamically
+            const wishes = [
+                "Happy Birthday Chinelo! Wishing you all the best. 🎉",
+                "Hope your 20th is as amazing as you are! 💖",
+                "Cheers to many more wonderful years ahead! 🎂"
+            ];
+
+            // Clear previous list
+            wishesList.innerHTML = "";
+
+            // Append new wishes
+            wishes.forEach(wish => {
+                const li = document.createElement("li");
+                li.textContent = wish;
+                wishesList.appendChild(li);
+            });
+        }
+
+        // Celebrate function to handle the wish submission
+        function celebrate(event) {
+            event.preventDefault(); // Prevent form submission from redirecting
+            alert("Thank you for your wish! 🎉");
+        }
+    </script>
+
+</body>
+</html>
