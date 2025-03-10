@@ -9,15 +9,18 @@
         body {
             font-family: 'Arial', sans-serif;
             text-align: center;
-            background: linear-gradient(to right, #ffccff, #ffffff, #e0b3ff); /* Pink, White, Purple */
+            background-image: url('image.jpg'); /* Reverted to original background image */
+            background-size: cover;
+            background-position: center center;
             color: white;
             margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
-            overflow: hidden;
+            justify-content: flex-start;
+            min-height: 100vh;
+            height: auto;
+            overflow: auto; /* Enable scrolling */
             position: relative;
         }
 
@@ -26,14 +29,15 @@
             background: rgba(0, 0, 0, 0.6);
             padding: 20px;
             border-radius: 20px;
-            width: 45%;
-            max-width: 500px;
+            width: 90%; /* Make it responsive */
+            max-width: 600px; /* Limit the width */
             box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(10px);
             text-align: center;
             animation: fadeIn 1.5s ease-in-out;
             position: relative;
             z-index: 2;
+            margin-top: 20px; /* Add some top margin */
         }
 
         /* 🎆 Animated Headings */
@@ -121,51 +125,20 @@
             backdrop-filter: blur(5px);
             animation: fadeIn 1.5s ease-in-out;
             color: white;
+            max-height: 400px;
+            overflow-y: auto; /* Scrollable content in wishes section */
         }
 
-        /* 🌥️ Clouds */
-        .clouds {
-            position: absolute;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            animation: moveClouds 20s linear infinite;
+        /* 🎉 Add scrolling effect to wishes */
+        #wishesList {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
         }
 
-        .cloud {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.7;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-            animation: floatClouds 10s linear infinite;
-        }
-
-        /* Cloud movement animation */
-        @keyframes moveClouds {
-            0% { left: -10%; }
-            100% { left: 100%; }
-        }
-
-        @keyframes floatClouds {
-            0% { top: 10%; }
-            50% { top: 60%; }
-            100% { top: 10%; }
-        }
-
-        /* 🎶 Styles for the wishes container on the new page */
-        .new-wishes-page {
-            text-align: center;
-            font-size: 1.5em;
-            color: #ff66cc;
-            padding: 20px;
-            background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 20px;
-            animation: fadeIn 1s ease;
-            max-width: 500px;
-            margin: 50px auto;
+        #wishesList li {
+            margin: 10px 0;
+            font-size: 1.1em;
         }
     </style>
 </head>
@@ -187,14 +160,14 @@
         <div class="menu-container">
             <button class="menu-btn" onclick="checkPassword()">🔒 View Wishes</button>
         </div>
-    </div>
 
-    <!-- Clouds -->
-    <div class="clouds">
-        <div class="cloud" style="width: 150px; height: 80px; left: 5%;"></div>
-        <div class="cloud" style="width: 200px; height: 100px; left: 40%;"></div>
-        <div class="cloud" style="width: 170px; height: 90px; left: 70%;"></div>
-        <div class="cloud" style="width: 180px; height: 100px; left: 100%;"></div>
+        <!-- Wishes Section (Initially Hidden) -->
+        <div class="wishes-section" id="wishesSection">
+            <h3>Wishes:</h3>
+            <ul id="wishesList">
+                <!-- Wishes will appear here dynamically -->
+            </ul>
+        </div>
     </div>
 
     <script>
@@ -206,13 +179,35 @@
             var correctPassword = "birthday2025";
 
             if (password === correctPassword) {
-                window.location.href = "wishes.html"; // Redirect to the new page with clouds
+                document.getElementById("wishesSection").style.display = "block";
+                displayWishes();  // Load wishes when password is correct
             } else {
                 alert("Incorrect password. Please try again.");
             }
         }
 
-        // Function to celebrate and submit wish
+        // Function to display wishes dynamically (for illustration purposes)
+        function displayWishes() {
+            const wishesList = document.getElementById("wishesList");
+            // Example wishes, can be fetched from a server or added dynamically
+            const wishes = [
+                "Happy Birthday Chinelo! Wishing you all the best. 🎉",
+                "Hope your 20th is as amazing as you are! 💖",
+                "Cheers to many more wonderful years ahead! 🎂"
+            ];
+
+            // Clear previous list
+            wishesList.innerHTML = "";
+
+            // Append new wishes
+            wishes.forEach(wish => {
+                const li = document.createElement("li");
+                li.textContent = wish;
+                wishesList.appendChild(li);
+            });
+        }
+
+        // Celebrate function to handle the wish submission
         function celebrate(event) {
             event.preventDefault(); // Prevent form submission from redirecting
             alert("Thank you for your wish! 🎉");
