@@ -9,9 +9,7 @@
         body {
             font-family: 'Arial', sans-serif;
             text-align: center;
-            background-image: url('image.jpg') ; 
-            background-size: contain;
-            background-position: center center;
+            background: linear-gradient(to right, #ffccff, #ffffff, #e0b3ff); /* Pink, White, Purple */
             color: white;
             margin: 0;
             display: flex;
@@ -20,6 +18,7 @@
             justify-content: center;
             height: 100vh;
             overflow: hidden;
+            position: relative;
         }
 
         /* 🎂 Main Box (Centered) */
@@ -124,6 +123,50 @@
             color: white;
         }
 
+        /* 🌥️ Clouds */
+        .clouds {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            animation: moveClouds 20s linear infinite;
+        }
+
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.7;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            animation: floatClouds 10s linear infinite;
+        }
+
+        /* Cloud movement animation */
+        @keyframes moveClouds {
+            0% { left: -10%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes floatClouds {
+            0% { top: 10%; }
+            50% { top: 60%; }
+            100% { top: 10%; }
+        }
+
+        /* 🎶 Styles for the wishes container on the new page */
+        .new-wishes-page {
+            text-align: center;
+            font-size: 1.5em;
+            color: #ff66cc;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            animation: fadeIn 1s ease;
+            max-width: 500px;
+            margin: 50px auto;
+        }
     </style>
 </head>
 <body>
@@ -144,14 +187,14 @@
         <div class="menu-container">
             <button class="menu-btn" onclick="checkPassword()">🔒 View Wishes</button>
         </div>
+    </div>
 
-        <!-- Wishes Section (Initially Hidden) -->
-        <div class="wishes-section" id="wishesSection">
-            <h3>Wishes:</h3>
-            <ul id="wishesList">
-                <!-- Wishes will appear here dynamically -->
-            </ul>
-        </div>
+    <!-- Clouds -->
+    <div class="clouds">
+        <div class="cloud" style="width: 150px; height: 80px; left: 5%;"></div>
+        <div class="cloud" style="width: 200px; height: 100px; left: 40%;"></div>
+        <div class="cloud" style="width: 170px; height: 90px; left: 70%;"></div>
+        <div class="cloud" style="width: 180px; height: 100px; left: 100%;"></div>
     </div>
 
     <script>
@@ -163,35 +206,13 @@
             var correctPassword = "birthday2025";
 
             if (password === correctPassword) {
-                document.getElementById("wishesSection").style.display = "block";
-                displayWishes();  // Load wishes when password is correct
+                window.location.href = "wishes.html"; // Redirect to the new page with clouds
             } else {
                 alert("Incorrect password. Please try again.");
             }
         }
 
-        // Function to display wishes dynamically (for illustration purposes)
-        function displayWishes() {
-            const wishesList = document.getElementById("wishesList");
-            // Example wishes, can be fetched from a server or added dynamically
-            const wishes = [
-                "Happy Birthday Chinelo! Wishing you all the best. 🎉",
-                "Hope your 20th is as amazing as you are! 💖",
-                "Cheers to many more wonderful years ahead! 🎂"
-            ];
-
-            // Clear previous list
-            wishesList.innerHTML = "";
-
-            // Append new wishes
-            wishes.forEach(wish => {
-                const li = document.createElement("li");
-                li.textContent = wish;
-                wishesList.appendChild(li);
-            });
-        }
-
-        // Celebrate function to handle the wish submission
+        // Function to celebrate and submit wish
         function celebrate(event) {
             event.preventDefault(); // Prevent form submission from redirecting
             alert("Thank you for your wish! 🎉");
